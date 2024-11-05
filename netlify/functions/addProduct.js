@@ -1,6 +1,6 @@
 // netlify/functions/addProduct.js
 const mongoose = require('mongoose');
-const Product = require('../../src/models/Product');
+const Product = require('../models/Product');
 
 const connectDb = async () => {
   if (mongoose.connection.readyState === 1) {

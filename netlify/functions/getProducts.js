@@ -1,6 +1,6 @@
 // netlify/functions/getProducts.js
 const mongoose = require('mongoose');
-const Product = require('../../src/models/Product'); // Model dosyanızı uygun şekilde ayarlayın
+const Product = require('../models/Product'); // Model dosyanızı uygun şekilde ayarlayın
 
 const connectDb = async () => {
   if (mongoose.connection.readyState === 1) {
