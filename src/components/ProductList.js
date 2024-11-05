@@ -11,10 +11,18 @@ const ProductList = () => {
 
   // Ürünleri sunucudan yükleme
   const fetchProducts = async () => {
-    const response = await fetch('/.netlify/functions/getProducts');
-    const data = await response.json();
-    setProducts(data);
+    try {
+      const response = await fetch(`${window.location.origin}/.netlify/functions/getProducts`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      setProducts(data);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
   };
+  
 
   useEffect(() => {
     fetchProducts(); // Bileşen yüklendiğinde ürünleri yükle
