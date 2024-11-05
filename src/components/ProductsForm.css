@@ -1,0 +1,20 @@
+.product-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .product-form input,
+  .product-form button {
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .product-form label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  

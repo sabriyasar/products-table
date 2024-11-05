@@ -1,0 +1,90 @@
+.product-list {
+    width: 100%;
+    border-collapse: collapse;
+    overflow-x: auto; /* Responsive tablonun yan kaydırılmasını sağlar */
+}
+
+.product-header,
+.product-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 100px; /* Esnek kolon genişlikleri */
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.product-header {
+    font-weight: bold;
+    background-color: #f9f9f9;
+}
+
+.options {
+    display: flex;
+    gap: 5px;
+}
+
+.view-btn,
+.edit-btn,
+.delete-btn {
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 5px;
+}
+
+/* Küçük ekranlar için medya sorgusu */
+@media (max-width: 768px) {
+    .product-header,
+    .product-row {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .product-header div,
+    .product-row div {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 0;
+    }
+
+    .product-header div::before,
+    .product-row div::before {
+        content: attr(data-label);
+        font-weight: bold;
+        width: 50%;
+        text-align: left;
+    }
+
+    .product-header div:nth-child(1)::before { content: ""; }
+    .product-header div:nth-child(2)::before { content: "Ürün Adı"; }
+    .product-header div:nth-child(3)::before { content: "Gramajı"; }
+    .product-header div:nth-child(4)::before { content: "Maliyeti"; }
+    .product-header div:nth-child(5)::before { content: "Perakende Fiyatı"; }
+    .product-header div:nth-child(6)::before { content: "Seçenekler"; }
+
+    .product-row div:nth-child(2)::before { content: "Ürün Adı:"; }
+    .product-row div:nth-child(3)::before { content: "Gramajı:"; }
+    .product-row div:nth-child(4)::before { content: "Maliyeti:"; }
+    .product-row div:nth-child(5)::before { content: "Perakende Fiyatı:"; }
+    .product-row div:nth-child(6)::before { content: "Seçenekler:"; }
+
+    /* Checkbox ve Seçenekler bölümünün düzenlenmesi */
+    .product-header div:first-child,
+    .product-row div:first-child {
+        display: none;
+    }
+
+    .product-row .options {
+        justify-content: flex-start;
+    }
+
+    /* Form ve butonların düzenlenmesi */
+    .ant-btn {
+        width: 100%; /* Butonlar tam genişlikte olacak şekilde ayarlandı */
+    }
+
+    .ant-input,
+    .ant-input-number {
+        width: 100%; /* Giriş alanları tam genişlikte olacak şekilde ayarlandı */
+    }
+}
