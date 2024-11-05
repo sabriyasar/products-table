@@ -1,6 +1,6 @@
-// netlify/functions/addProduct.js
+// netlify/functions/deleteProduct.js
 const mongoose = require('mongoose');
-const Product = require('../../src/models/Product');
+const Product = require('../models/Product');
 
 const connectDb = async () => {
   if (mongoose.connection.readyState === 1) {
@@ -12,13 +12,11 @@ const connectDb = async () => {
 exports.handler = async (event) => {
   await connectDb();
 
-  if (event.httpMethod === 'POST') {
-    const productData = JSON.parse(event.body);
-    const newProduct = new Product(productData);
-    await newProduct.save(); // Ürünü kaydet
+  if (event.httpMethod === 'DELETE') {
+    const { key } = JSON.parse(event.body);
+    await Product.deleteOne({ key }); // Ürünü sil
     return {
-      statusCode: 201,
-      body: JSON.stringify(newProduct),
+      statusCode: 204,
     };
   }
 

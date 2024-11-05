@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table, Button, Input, Modal, Form, InputNumber } from 'antd';
 import { PlusOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
@@ -8,6 +8,17 @@ const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
+
+  // Ürünleri sunucudan yükleme
+  const fetchProducts = async () => {
+    const response = await fetch('/.netlify/functions/getProducts');
+    const data = await response.json();
+    setProducts(data);
+  };
+
+  useEffect(() => {
+    fetchProducts(); // Bileşen yüklendiğinde ürünleri yükle
+  }, []);
 
   // Ürün ekleme modalini açma
   const showAddProductModal = () => {
@@ -21,35 +32,44 @@ const ProductList = () => {
   };
 
   // Ürün ekleme veya güncelleme
-  const handleOk = (values) => {
+  const handleOk = async (values) => {
     if (editingProduct) {
       // Ürün güncelleme
-      setProducts(
-        products.map((product) =>
-          product.key === editingProduct.key ? { ...editingProduct, ...values } : product
-        )
+      const updatedProducts = products.map((product) =>
+        product.key === editingProduct.key ? { ...editingProduct, ...values } : product
       );
+      setProducts(updatedProducts);
+      // Güncellenen ürünü sunucuya gönderme
+      await fetch('/.netlify/functions/updateProduct', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...editingProduct, ...values }),
+      });
     } else {
       // Yeni ürün ekleme
-      setProducts([
-        ...products,
-        {
-          key: Date.now(),
-          ...values,
-        },
-      ]);
+      const newProduct = { key: Date.now(), ...values };
+      setProducts([...products, newProduct]);
+      await fetch('/.netlify/functions/addProduct', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(values),
+      });
     }
     setIsModalVisible(false);
   };
 
   // Ürün silme
-  const handleDelete = (key) => {
+  const handleDelete = async (key) => {
     setProducts(products.filter((product) => product.key !== key));
+    await fetch('/.netlify/functions/deleteProduct', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key }),
+    });
   };
 
   // Arama filtresi
   const handleSearch = (value) => {
-    // Basit bir filtreleme örneği
     const filtered = products.filter((product) =>
       product.name.toLowerCase().includes(value.toLowerCase())
     );

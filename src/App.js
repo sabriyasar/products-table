@@ -22,17 +22,6 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Ürünler</h1>
-      <div className="top-bar">
-        <button className="bulk-action">Bulk Action</button>
-        <input
-          className="sort-by"
-          placeholder="Sort By"
-          disabled
-        />
-        <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      </div>
-      <ProductForm addProduct={addProduct} />
       <ProductList products={filteredProducts} deleteProduct={deleteProduct} />
     </div>
   );

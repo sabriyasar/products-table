@@ -48,8 +48,8 @@ function ProductForm() {
         wholesalePrice: "",
       });
     } catch (error) {
-      console.error(error.message);
-      // Hata mesajını kullanıcıya göster
+        console.error(error.message);
+        alert('Ürün eklenirken bir hata oluştu: ' + error.message); // Hata mesajı
     }
   };
 
