@@ -19,7 +19,7 @@ function ProductForm() {
   };
 
   const addProduct = async (productData) => {
-    const response = await fetch('/.netlify/functions/addProduct', {
+    const response = await fetch('/netlify/functions/addProduct', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

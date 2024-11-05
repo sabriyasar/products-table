@@ -12,7 +12,7 @@ const ProductList = () => {
   // Ürünleri sunucudan yükleme
   const fetchProducts = async () => {
     try {
-      const response = await fetch(`${window.location.origin}/.netlify/functions/getProducts`);
+      const response = await fetch(`${window.location.origin}/netlify/functions/getProducts`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -48,7 +48,7 @@ const ProductList = () => {
       );
       setProducts(updatedProducts);
       // Güncellenen ürünü sunucuya gönderme
-      await fetch('/.netlify/functions/updateProduct', {
+      await fetch('/netlify/functions/updateProduct', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...editingProduct, ...values }),
@@ -57,7 +57,7 @@ const ProductList = () => {
       // Yeni ürün ekleme
       const newProduct = { key: Date.now(), ...values };
       setProducts([...products, newProduct]);
-      await fetch('/.netlify/functions/addProduct', {
+      await fetch('/netlify/functions/addProduct', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values),
@@ -69,7 +69,7 @@ const ProductList = () => {
   // Ürün silme
   const handleDelete = async (key) => {
     setProducts(products.filter((product) => product.key !== key));
-    await fetch('/.netlify/functions/deleteProduct', {
+    await fetch('/netlify/functions/deleteProduct', {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ key }),

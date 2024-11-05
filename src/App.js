@@ -6,7 +6,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/.netlify/functions/getProducts')
+    fetch('/netlify/functions/getProducts')
       .then((response) => response.json())
       .then((data) => {
         setProducts(data);
