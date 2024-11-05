@@ -1,5 +1,10 @@
+[build]
+  functions = "netlify/functions"  # Netlify işlevlerinin bulunduğu dizin
+  publish = "build"                # Üretilen dosyaların yer aldığı dizin
+  command = "npm run build"        # Projeyi derlemek için kullanılacak komut
+
 [[redirects]]
-from = "/*"
-to = "/index.html"
-status = 200
-force = true
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = true
