@@ -1,4 +1,3 @@
-// netlify/functions/addProduct.js
 const mongoose = require('mongoose');
 const Product = require('../models/Product');
 
